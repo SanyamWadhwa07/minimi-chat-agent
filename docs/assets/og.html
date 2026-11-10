@@ -1,0 +1,45 @@
+<!doctype html>
+<!-- The GitHub social preview card. Render to og.png at 1280x640:
+     chrome --headless --window-size=1280,640 --screenshot=og.png docs/assets/og.html -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" />
+    <style>
+      html, body { margin: 0; width: 1280px; height: 640px; background: #fff; color: #000; font-family: Roboto, Arial, sans-serif; }
+      .card { box-sizing: border-box; height: 100%; padding: 84px 96px; display: grid; grid-template-columns: 1fr 360px; gap: 64px; align-items: center; }
+      .brand { display: flex; align-items: center; gap: 16px; font-size: 34px; font-weight: 600; margin-bottom: 40px; }
+      .brand span { color: #737373; font-weight: 400; }
+      h1 { font-size: 64px; line-height: 1.08; letter-spacing: -0.02em; font-weight: 600; margin: 0 0 24px; }
+      p { font-size: 27px; line-height: 1.4; color: #555; margin: 0; }
+      .days { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      .day { border: 2px solid #e3e3e3; border-radius: 22px; overflow: hidden; text-align: center; background: #fff; }
+      .day b { display: block; background: #f2f2f2; color: #737373; font-size: 22px; padding: 8px 0; font-weight: 600; }
+      .day i { display: block; font-style: normal; font-size: 54px; font-weight: 600; padding: 14px 0 16px; color: #737373; }
+      .day.on b { background: #ff8133; color: #000; }
+      .day.on i { color: #000; }
+      .note { grid-column: 1 / -1; font-size: 20px; color: #737373; margin-top: 18px; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div>
+        <div class="brand">
+          <svg width="52" height="52" viewBox="0 0 64 64"><rect x="4" y="5" width="56" height="55" rx="15" /><rect x="11" y="21" width="42" height="32" rx="8" fill="#fff" /><rect x="20" y="9" width="5" height="9" rx="2.5" fill="#fff" /><rect x="39" y="9" width="5" height="9" rx="2.5" fill="#fff" /><circle cx="40" cy="37" r="8" fill="#ff8133" /></svg>
+          minimi <span>chat agent</span>
+        </div>
+        <h1>Remembers what you asked, and when.</h1>
+        <p>Then re-checks it against today's web, with sources.</p>
+      </div>
+      <div class="days">
+        <div class="day"><b>Mon</b><i>2</i></div>
+        <div class="day on"><b>Tue</b><i>3</i></div>
+        <div class="day"><b>Wed</b><i>4</i></div>
+        <div class="day"><b>Thu</b><i>5</i></div>
+        <div class="day"><b>Fri</b><i>6</i></div>
+        <div class="day on"><b>Mon</b><i>9</i></div>
+        <div class="note">“Last Tuesday I asked about Postgres hosting. Has pricing changed?”</div>
+      </div>
+    </div>
+  </body>
+</html>
