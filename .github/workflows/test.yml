@@ -12,7 +12,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            node: "22.13" # the oldest Node with built-in SQLite unflagged
+            node: "22.16" # the oldest Node whose built-in SQLite has full-text search (FTS5)
           - os: ubuntu-latest
             node: "24"
           - os: macos-latest

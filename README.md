@@ -20,7 +20,7 @@
   <a href="https://github.com/SanyamWadhwa07/minimi-chat-agent/actions/workflows/test.yml"><img src="https://github.com/SanyamWadhwa07/minimi-chat-agent/actions/workflows/test.yml/badge.svg" alt="tests"></a>
   <a href="https://github.com/SanyamWadhwa07/minimi-chat-agent/releases/latest"><img src="https://img.shields.io/github/v/release/SanyamWadhwa07/minimi-chat-agent?color=ff8133" alt="latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-000000" alt="MIT license"></a>
-  <img src="https://img.shields.io/badge/node-22.13%2B,_no_build_step-000000" alt="Node 22.13+, no build step">
+  <img src="https://img.shields.io/badge/node-22.16%2B,_no_build_step-000000" alt="Node 22.16+, no build step">
 </p>
 
 <p align="center">
@@ -33,7 +33,7 @@ item, with sources.
 
 ## Run it
 
-Needs Node.js 22.13 or newer.
+Needs Node.js 22.16 or newer.
 
 ```bash
 npm install

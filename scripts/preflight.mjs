@@ -1,8 +1,9 @@
 // Runs before `npm run dev`: checks the Node version and the keys, and says in plain words what to
 // fix. Plain JavaScript so it runs even where TypeScript tooling would not.
 const [major, minor] = process.versions.node.split(".").map(Number);
-if (major < 22 || (major === 22 && minor < 13)) {
-  console.error(`\n  This app needs Node.js 22.13 or newer (it uses the built-in SQLite). You have ${process.versions.node}.\n  Install the current LTS from https://nodejs.org and run npm run dev again.\n`);
+// 22.16 is the first Node 22 whose built-in SQLite includes full-text search (FTS5), which recall uses.
+if (major < 22 || (major === 22 && minor < 16)) {
+  console.error(`\n  This app needs Node.js 22.16 or newer (its built-in SQLite has the full-text search memory uses). You have ${process.versions.node}.\n  Install the current LTS from https://nodejs.org and run npm run dev again.\n`);
   process.exit(1);
 }
 
