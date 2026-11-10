@@ -1,0 +1,3 @@
+* text=auto eol=lf
+# recorded API streams: keep the exact bytes the parser tests read
+test/fixtures/** -text
