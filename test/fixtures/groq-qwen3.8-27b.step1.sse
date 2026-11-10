@@ -1,0 +1,12 @@
+data: {"id":"chatcmpl-05991ebb-3810-4926-a574-eb2a54e9fdea","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_424cb89518","choices":[{"index":0,"delta":{"role":"assistant","content":null},"logprobs":null,"finish_reason":null}],"x_groq":{"id":"req_01m72w4bj3eaya3a7166mngh44","seed":520626555}}
+
+data: {"id":"chatcmpl-05991ebb-3810-4926-a574-eb2a54e9fdea","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_424cb89518","choices":[{"index":0,"delta":{"tool_calls":[{"id":"hhx7gfs22","type":"function","function":{"name":"web_search","arguments":"{\"query\":\"Neon database pricing plans monthly cheapest paid plan\"}"},"index":0}]},"logprobs":null,"finish_reason":null}]}
+
+data: {"id":"chatcmpl-05991ebb-3810-4926-a574-eb2a54e9fdea","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_424cb89518","choices":[{"index":0,"delta":{"tool_calls":[{"id":"zpnrfwer7","type":"function","function":{"name":"web_search","arguments":"{\"query\":\"Supabase pricing plans monthly cheapest paid plan\"}"},"index":1}]},"logprobs":null,"finish_reason":null}]}
+
+data: {"id":"chatcmpl-05991ebb-3810-4926-a574-eb2a54e9fdea","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_424cb89518","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}],"x_groq":{"id":"req_01m72w4bj3eaya3a7166mngh44","usage":{"queue_time":0.215764414,"prompt_tokens":304,"prompt_time":0.023912725,"completion_tokens":67,"completion_time":0.210438652,"total_tokens":371,"total_time":0.234351377}},"usage":{"queue_time":0.215764414,"prompt_tokens":304,"prompt_time":0.023912725,"completion_tokens":67,"completion_time":0.210438652,"total_tokens":371,"total_time":0.234351377}}
+
+data: {"id":"chatcmpl-05991ebb-3810-4926-a574-eb2a54e9fdea","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_424cb89518","choices":[],"usage":{"queue_time":0.215764414,"prompt_tokens":304,"prompt_time":0.023912725,"completion_tokens":67,"completion_time":0.210438652,"total_tokens":371,"total_time":0.234351377},"service_tier":"on_demand"}
+
+data: [DONE]
+

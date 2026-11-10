@@ -1,0 +1,8 @@
+data: {"choices":[{"delta":{"role":"assistant","tool_calls":[{"extra_content":{"google":{"thought_signature":"EmkKZwFpFH0T9M8RbxKXUA4MIfzJStXPdzc8KlMHD6v40PXZVBoaUY17CfzWxszSFhQQLggIx5A5EPLfq3WFOHG9cbBRrgtX4LyaMpGBOZz/HPnCQK2zTKK76oSOey9qfFSGZTxpGRx++AQ="}},"function":{"arguments":"{\"query\":\"neon tech pricing plans\"}","name":"web_search"},"id":"call_15558184864316591782","type":"function"}]},"index":0}],"created":1794319199,"id":"XSPzaruLNPDwv_gPxfT3uA0","model":"gemini-3.8-flash","object":"chat.completion.chunk","usage":{"completion_tokens":19,"prompt_tokens":222,"total_tokens":241}}
+
+data: {"choices":[{"delta":{"role":"assistant","tool_calls":[{"function":{"arguments":"{\"query\":\"supabase pricing plans pro\"}","name":"web_search"},"id":"call_15558184864316589105","type":"function"}]},"index":0}],"created":1794319199,"id":"XSPzaruLNPDwv_gPxfT3uA0","model":"gemini-3.8-flash","object":"chat.completion.chunk","usage":{"completion_tokens":38,"prompt_tokens":222,"total_tokens":260}}
+
+data: {"choices":[{"delta":{"role":"assistant"},"finish_reason":"stop","index":0}],"created":1794319199,"id":"XSPzaruLNPDwv_gPxfT3uA0","model":"gemini-3.8-flash","object":"chat.completion.chunk","usage":{"completion_tokens":38,"prompt_tokens":222,"total_tokens":260}}
+
+data: [DONE]
+

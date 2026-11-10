@@ -1,0 +1,12 @@
+data: {"id":"chatcmpl-9a02a46b-1eaf-4b13-a812-640a55d9199e","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_21e59ac2de","choices":[{"index":0,"delta":{"role":"assistant","content":null},"logprobs":null,"finish_reason":null}],"x_groq":{"id":"req_01m72w4c81edfvtfxf7wcbenhd","seed":678338653}}
+
+data: {"id":"chatcmpl-9a02a46b-1eaf-4b13-a812-640a55d9199e","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_21e59ac2de","choices":[{"index":0,"delta":{"tool_calls":[{"id":"45ceyfz04","type":"function","function":{"name":"web_search","arguments":"{\"query\":\"Neon database Launch plan price per month\"}"},"index":0}]},"logprobs":null,"finish_reason":null}]}
+
+data: {"id":"chatcmpl-9a02a46b-1eaf-4b13-a812-640a55d9199e","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_21e59ac2de","choices":[{"index":0,"delta":{"tool_calls":[{"id":"1h1b8zf86","type":"function","function":{"name":"web_search","arguments":"{\"query\":\"Supabase Pro plan price per month\"}"},"index":1}]},"logprobs":null,"finish_reason":null}]}
+
+data: {"id":"chatcmpl-9a02a46b-1eaf-4b13-a812-640a55d9199e","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_21e59ac2de","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}],"x_groq":{"id":"req_01m72w4c81edfvtfxf7wcbenhd","usage":{"queue_time":0.126761105,"prompt_tokens":468,"prompt_time":0.035671734,"completion_tokens":65,"completion_time":0.198379686,"total_tokens":533,"total_time":0.23405142}},"usage":{"queue_time":0.126761105,"prompt_tokens":468,"prompt_time":0.035671734,"completion_tokens":65,"completion_time":0.198379686,"total_tokens":533,"total_time":0.23405142}}
+
+data: {"id":"chatcmpl-9a02a46b-1eaf-4b13-a812-640a55d9199e","object":"chat.completion.chunk","created":1794319200,"model":"qwen/qwen3.8-27b","system_fingerprint":"fp_21e59ac2de","choices":[],"usage":{"queue_time":0.126761105,"prompt_tokens":468,"prompt_time":0.035671734,"completion_tokens":65,"completion_time":0.198379686,"total_tokens":533,"total_time":0.23405142},"service_tier":"on_demand"}
+
+data: [DONE]
+

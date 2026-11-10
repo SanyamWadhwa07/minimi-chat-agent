@@ -1,0 +1,8 @@
+data: {"choices":[{"delta":{"role":"assistant","tool_calls":[{"extra_content":{"google":{"thought_signature":"EmkKZwFpFH0Ty79vZqnEu0R4bvYmW5v8hOImQCM6ptEumIzS4uEsW69LEpTkmy2i0a/GEySmM1DY2SUr5V8ozRBwctl/j3MmxydrGnNKW3CiFWgYaWK5ijQ+p97dq9N73g383NkrQKa8sjA="}},"function":{"arguments":"{\"query\":\"Neon postgres pricing cheapest paid plan monthly\"}","name":"web_search"},"id":"call_18277129134416200249","type":"function"}]},"index":0}],"created":1794319197,"id":"WyPzaoDcHa77694PvPrN4Q0","model":"gemini-3.8-flash","object":"chat.completion.chunk","usage":{"completion_tokens":22,"prompt_tokens":79,"total_tokens":101}}
+
+data: {"choices":[{"delta":{"role":"assistant","tool_calls":[{"function":{"arguments":"{\"query\":\"Supabase pricing cheapest paid plan monthly\"}","name":"web_search"},"id":"call_18277129134416201978","type":"function"}]},"index":0}],"created":1794319197,"id":"WyPzaoDcHa77694PvPrN4Q0","model":"gemini-3.8-flash","object":"chat.completion.chunk","usage":{"completion_tokens":44,"prompt_tokens":79,"total_tokens":123}}
+
+data: {"choices":[{"delta":{"role":"assistant"},"finish_reason":"stop","index":0}],"created":1794319197,"id":"WyPzaoDcHa77694PvPrN4Q0","model":"gemini-3.8-flash","object":"chat.completion.chunk","usage":{"completion_tokens":44,"prompt_tokens":79,"total_tokens":123}}
+
+data: [DONE]
+
