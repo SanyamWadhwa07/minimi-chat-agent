@@ -1,0 +1,42 @@
+name: Bug report
+description: Something did not work as expected.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you asked, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part
+      options:
+        - Memory (what it recalled, or a date it misread)
+        - Search or sources
+        - The answer itself
+        - Speed or a stall
+        - The chat page
+        - Setup (npm install, npm run dev, keys)
+    validations:
+      required: true
+  - type: input
+    id: models
+    attributes:
+      label: Models
+      description: The line at the top right of the page, for example "gemini-3.8-flash with Groq as backup".
+  - type: input
+    id: env
+    attributes:
+      label: Node version and OS
+      placeholder: Node 22.13, macOS 26
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Server output
+      description: Lines from the terminal running npm run dev. Remove anything private.
+      render: text
