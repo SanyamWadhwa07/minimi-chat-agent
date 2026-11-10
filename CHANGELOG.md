@@ -4,6 +4,20 @@ All notable changes are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-11-10
+
+### Added
+
+- **Add demo history** on the start screen: the agent answers three real questions dated last
+  Tuesday, Monday and 3 November, shown live, so a new install has memory to try. Same as
+  `npm run seed`.
+
+### Fixed
+
+- Node 22.13 to 22.15 ship SQLite without full-text search, so recall failed there. The minimum is
+  now Node 22.16, the first Node 22 with it; `npm run dev` says so on older versions, and CI tests
+  22.16.
+
 ## [1.0.0] - 2026-11-10
 
 ### Added
@@ -21,4 +35,5 @@ All notable changes are documented here. The format follows
   source cards, a memory drawer, and a mini window in Chrome.
 - 83 unit and integration tests (no keys needed) and a 16-conversation live eval.
 
+[1.1.0]: https://github.com/SanyamWadhwa07/minimi-chat-agent/releases/tag/v1.1.0
 [1.0.0]: https://github.com/SanyamWadhwa07/minimi-chat-agent/releases/tag/v1.0.0
