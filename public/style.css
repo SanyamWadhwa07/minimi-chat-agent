@@ -117,6 +117,15 @@ button { cursor: pointer; }
 .suggestion[data-kind="memory"] .kind .icon { color: var(--memory); stroke-width: 2.2; }
 .suggestion .prompt { font-size: 14.5px; line-height: 1.45; }
 
+.demo { margin-top: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; }
+.demo-head { display: flex; gap: 16px; align-items: center; justify-content: space-between; }
+.demo-head b { font-weight: 600; font-size: 14.5px; }
+.demo-head p { margin: 2px 0 0; color: var(--muted); font-size: 13.5px; max-width: 52ch; }
+.demo-head .btn { flex: none; }
+.demo-head .btn:disabled { opacity: 0.5; cursor: default; }
+.demo-steps { padding: 10px 0 0; }
+.demo-steps:empty { display: none; }
+
 .turn { margin-bottom: 32px; }
 .you { display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 14px; }
 .you .bubble { background: var(--surface-2); padding: 10px 14px; border-radius: 16px 16px 5px 16px; max-width: 85%; white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -298,6 +307,7 @@ body.mini .welcome h1 { font-size: 22px; }
 /* ---------------------------------------------------------------- small screens and motion */
 @media (max-width: 720px) {
   .suggestions { grid-template-columns: 1fr; }
+  .demo-head { flex-direction: column; align-items: flex-start; }
   .sources { grid-template-columns: 1fr; }
   .status, .brand-sub, .topbar .btn .label { display: none; }
   .top-actions { margin-left: auto; }

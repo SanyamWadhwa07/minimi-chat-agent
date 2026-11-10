@@ -278,6 +278,25 @@ function storedTurn(t) {
 
 let running = null; // AbortController of the turn in progress
 
+/** POSTs and yields each server-sent event; a non-2xx answer throws its JSON error message. */
+async function* postEvents(url, body, signal) {
+  const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body ?? {}), signal });
+  if (!res.ok || !res.body) throw new Error((await res.json().catch(() => ({}))).error || `The server returned HTTP ${res.status}.`);
+  const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
+  let buffer = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) return;
+    buffer += value;
+    let i;
+    while ((i = buffer.indexOf("\n\n")) >= 0) {
+      const line = buffer.slice(0, i);
+      buffer = buffer.slice(i + 2);
+      if (line.startsWith("data: ")) yield JSON.parse(line.slice(6));
+    }
+  }
+}
+
 async function send(text) {
   log.querySelector(".welcome")?.remove();
   const live = liveTurn(text);
@@ -285,37 +304,18 @@ async function send(text) {
   running = new AbortController();
   setRunning(true);
   try {
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId, message: text }),
-      signal: running.signal,
-    });
-    if (!res.ok || !res.body) throw new Error((await res.json().catch(() => ({}))).error || `The server returned HTTP ${res.status}.`);
-    const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
-    let buffer = "";
     let finished = false;
-    for (;;) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buffer += value;
-      let i;
-      while ((i = buffer.indexOf("\n\n")) >= 0) {
-        const line = buffer.slice(0, i);
-        buffer = buffer.slice(i + 2);
-        if (!line.startsWith("data: ")) continue;
-        const e = JSON.parse(line.slice(6));
-        if (e.type === "error") {
-          live.fail(e.message, e.retryable);
-          finished = true;
-        } else if (e.type === "done") {
-          live.done(e);
-          finished = true;
-        } else if (e.type === "text") live.text(e.delta);
-        else if (e.type === "notice") live.notice(e.message);
-        else if (e.type === "sources") live.sources(e.sources);
-        else live[e.type]?.(e);
-      }
+    for await (const e of postEvents("/api/chat", { sessionId, message: text }, running.signal)) {
+      if (e.type === "error") {
+        live.fail(e.message, e.retryable);
+        finished = true;
+      } else if (e.type === "done") {
+        live.done(e);
+        finished = true;
+      } else if (e.type === "text") live.text(e.delta);
+      else if (e.type === "notice") live.notice(e.message);
+      else if (e.type === "sources") live.sources(e.sources);
+      else live[e.type]?.(e);
     }
     if (!finished) live.fail("The connection closed before the answer finished.", true);
   } catch (err) {
@@ -369,7 +369,48 @@ function showWelcome() {
       input.focus();
     };
   }
+  const demo = welcome.querySelector(".demo");
+  demo.querySelector(".demo-btn").onclick = () => addDemo(demo);
   log.append(welcome);
+  syncDemoCard();
+}
+
+// ------------------------------------------------------------------ demo history
+
+let demoOffered = false; // set from /api/status: models and search work, and no demo history yet
+const syncDemoCard = () => { const card = log.querySelector(".demo"); if (card) card.hidden = !demoOffered; };
+
+/** Adds the demo history, showing each back-dated question as the agent answers it. */
+async function addDemo(card) {
+  const btn = card.querySelector(".demo-btn");
+  const list = card.querySelector(".demo-steps");
+  btn.disabled = true;
+  btn.textContent = "Adding";
+  const rows = [];
+  try {
+    for await (const e of postEvents("/api/demo")) {
+      if (e.type === "demo") {
+        if (!rows[e.i]) {
+          const li = el("li", "step");
+          const tail = el("span", "tail", "asking");
+          li.append(dayTile(e.askedAt), el("span", "what", e.question), tail);
+          list.append(li);
+          rows[e.i] = tail;
+        }
+        if (e.saved !== null) rows[e.i].replaceChildren(...(e.saved ? [icon("check"), "saved"] : ["not saved"]));
+      } else if (e.type === "done") {
+        setMemoryCount(memoryCount + e.saved);
+        demoOffered = false;
+        card.querySelector(".demo-head b").textContent = e.saved ? "Demo history added" : "The demo history could not be added";
+        card.querySelector(".demo-head p").textContent = e.saved ? "Ask the memory question above, or open Memory to see what was added." : "Check the keys in .env and the terminal running npm run dev.";
+        btn.hidden = true;
+      }
+    }
+  } catch (err) {
+    card.querySelector(".demo-head p").textContent = err instanceof TypeError ? "Can't reach the app server." : err.message;
+    btn.disabled = false;
+    btn.textContent = "Try again";
+  }
 }
 
 async function openSession(id) {
@@ -528,6 +569,8 @@ fetch("/api/status").then((r) => r.json()).then((s) => {
     status.textContent = `${main}${backup ? ` with ${backup} as backup` : ""}, web search on`;
   }
   setMemoryCount(s.stored);
+  demoOffered = Boolean(main && s.search && !s.demo);
+  syncDemoCard();
 }).catch(() => {});
 openSession(sessionId);
 grow();

@@ -106,6 +106,26 @@ test("the page, its icon and the vendored libraries are served; nothing outside 
   }
 });
 
+test("demo history: three back-dated conversations, added once, one run at a time", async () => {
+  const own = await listen(createApp(openMemory(":memory:")), 0); // a fresh memory, whatever ran before
+  const base = `http://127.0.0.1:${(own.address() as { port: number }).port}`;
+  after(() => own.close());
+  fakeNetwork({ generativelanguage: [{ kind: "sse", events: [chunk.text("answer"), chunk.text(" [1]")] }] });
+  const status = async () => (await (await fetch(`${base}/api/status`)).json()) as { demo: boolean };
+  assert.equal((await status()).demo, false);
+  const first = fetch(`${base}/api/demo`, { method: "POST" });
+  const second = await fetch(`${base}/api/demo`, { method: "POST" }); // while the first is running
+  assert.equal(second.status, 409);
+  const e = events(await (await first).text());
+  assert.deepEqual(e.filter((x) => x.type === "demo").map((x) => [x.i, x.saved]), [[0, null], [0, true], [1, null], [1, true], [2, null], [2, true]]);
+  assert.deepEqual(e.at(-1), { type: "done", saved: 3 });
+  for (const p of e.filter((x) => x.type === "demo")) assert.ok(p.askedAt < Date.now(), "never dated in the future");
+  const rows = ((await (await fetch(`${base}/api/history`)).json()) as { origin: string; session_id: string }[]).filter((r) => r.origin === "seed");
+  assert.equal(rows.length, 3);
+  assert.equal((await status()).demo, true);
+  assert.equal((await fetch(`${base}/api/demo`, { method: "POST" })).status, 409); // only once
+});
+
 test("listens on this machine only, never on the network", () => {
   assert.equal((server.address() as { address: string }).address, "127.0.0.1");
 });

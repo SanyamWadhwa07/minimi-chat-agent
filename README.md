@@ -47,8 +47,9 @@ npm run dev              # http://localhost:3000
 | `GROQ_API_KEY` | [console.groq.com/keys](https://console.groq.com/keys) | backup when Gemini fails (optional) |
 | `TAVILY_API_KEY` | [app.tavily.com](https://app.tavily.com) | web search |
 
-A new install remembers nothing yet. `npm run seed` asks the agent three real questions dated
-last Tuesday, Monday and 3 November, so the questions above have something to find.
+A new install remembers nothing yet. Click **Add demo history** on the start screen (or run
+`npm run seed`): the agent answers three real questions dated last Tuesday, Monday and 3 November,
+so the questions above have something to find.
 
 ## How it works
 
@@ -64,7 +65,7 @@ Why each choice, what was measured and what was rejected: [DESIGN.md](DESIGN.md)
 
 ## Reliability
 
-Every row is a test that runs without keys: `npm test`, 83 tests, about 2 seconds.
+Every row is a test that runs without keys: `npm test`, 84 tests, about 2 seconds.
 
 | When | What happens |
 |---|---|

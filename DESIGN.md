@@ -43,7 +43,7 @@ headers.
 - Tavily's "news" topic answered "Supabase pricing" with OECD tax and PS5 stories at relevance up
   to 1.0, so it was dropped.
 
-**Offline** (`npm test`, 83 tests, no keys): a scripted network replays both providers' real
+**Offline** (`npm test`, 84 tests, no keys): a scripted network replays both providers' real
 stream formats and forces every failure: rate limits, stalls before and during an answer, broken
 streams, malformed tool calls, search errors and timeouts, a closed tab, oversized and malformed
 requests, path traversal, a busy port. Writing them found four bugs: "march" and "sun" read as

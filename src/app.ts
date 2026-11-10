@@ -4,11 +4,24 @@ import express, { type ErrorRequestHandler } from "express";
 import { z } from "zod";
 import { fileURLToPath } from "node:url";
 import type { Server } from "node:http";
+import type { Response } from "express";
 import type { Memory } from "./memory/db.ts";
-import { runTurn, type AgentEvent } from "./agent.ts";
+import { runTurn } from "./agent.ts";
 import { providers } from "./llm.ts";
+import { addDemoHistory, hasDemo } from "./demo.ts";
 
 const chatBody = z.object({ sessionId: z.string().min(1).max(100), message: z.string().trim().min(1).max(4000) });
+
+/** Opens a server-sent event stream. Closing the tab aborts the signal, which cancels models and searches. */
+function eventStream(res: Response) {
+  res.writeHead(200, { "Content-Type": "text/event-stream", "Cache-Control": "no-cache", Connection: "keep-alive" });
+  res.flushHeaders();
+  const ctrl = new AbortController();
+  res.on("close", () => {
+    if (!res.writableEnded) ctrl.abort(new Error("client disconnected"));
+  });
+  return { send: (event: object) => res.write(`data: ${JSON.stringify(event)}\n\n`), signal: ctrl.signal };
+}
 
 export function createApp(mem: Memory) {
   const app = express();
@@ -22,7 +35,7 @@ export function createApp(mem: Memory) {
 
   // Which models are set up; never the keys themselves.
   app.get("/api/status", (_req, res) => {
-    res.json({ models: providers().map((p) => `${p.name}: ${p.main.model}`), search: Boolean(process.env.TAVILY_API_KEY), stored: mem.stats().n });
+    res.json({ models: providers().map((p) => `${p.name}: ${p.main.model}`), search: Boolean(process.env.TAVILY_API_KEY), stored: mem.stats().n, demo: hasDemo(mem) });
   });
 
   // A conversation's turns, so a reload shows it again.
@@ -39,16 +52,27 @@ export function createApp(mem: Memory) {
       res.status(400).json({ error: "Send { sessionId, message } with a message of 1 to 4000 characters." });
       return;
     }
-    res.writeHead(200, { "Content-Type": "text/event-stream", "Cache-Control": "no-cache", Connection: "keep-alive" });
-    res.flushHeaders();
-    // Closing the tab or pressing Stop closes the connection; that cancels the model and the searches.
-    const ctrl = new AbortController();
-    res.on("close", () => {
-      if (!res.writableEnded) ctrl.abort(new Error("client disconnected"));
-    });
-    const send = (e: AgentEvent) => res.write(`data: ${JSON.stringify(e)}\n\n`);
-    await runTurn(mem, body.data, send, ctrl.signal);
+    const { send, signal } = eventStream(res);
+    await runTurn(mem, body.data, send, signal);
     res.end();
+  });
+
+  // Demo history for a new install. One run at a time, and only once.
+  let demoRunning = false;
+  app.post("/api/demo", async (_req, res) => {
+    if (demoRunning || hasDemo(mem)) {
+      res.status(409).json({ error: demoRunning ? "The demo history is already being added." : "The demo history is already in memory." });
+      return;
+    }
+    demoRunning = true;
+    try {
+      const { send, signal } = eventStream(res);
+      const saved = await addDemoHistory(mem, (p) => send({ type: "demo", ...p }), signal);
+      send({ type: "done", saved });
+      res.end();
+    } finally {
+      demoRunning = false;
+    }
   });
 
   app.use("/api", (_req, res) => res.status(404).json({ error: "No such endpoint." }));
